@@ -14,7 +14,7 @@
           <span class="time">{{`注册时间 ${moment(user.create_at)}`}}</span>
         </div>
       </div>
-      <div class="latest1">
+      <div class="latest1" v-if="topics.length">
         <h3>最近创建的话题</h3>
         <div class="content">
           <ul>
@@ -22,7 +22,10 @@
               <router-link :to="`/user/${reply.author.loginname}`">
                 <img :src="reply.author.avatar_url" alt />
               </router-link>
-              <span class="count">{{replys(reply.id)}}/{{visits(reply.id)}}</span>
+              <span
+                class="count"
+              >{{topics.find(item=>item.id===reply.id).reply_count}}/{{topics.find(item=>item.id===reply.id).visit_count}}</span>
+              <!-- <span class="count">{{replys(reply.id)}}/{{visits(reply.id)}}</span> -->
               <!-- <img :src="reply.author.avatar_url" alt /> -->
               <router-link :to="`/topic/${reply.id}`" class="title2">{{reply.title}}</router-link>
               <span>{{moment(reply.last_reply_at)}}</span>
@@ -30,7 +33,7 @@
           </ul>
         </div>
       </div>
-      <div class="latest2">
+      <div class="latest2" v-if="replies.length">
         <h3>最近参与的话题</h3>
         <div class="content">
           <ul>
@@ -38,7 +41,9 @@
               <router-link :to="`/user/${reply.author.loginname}`">
                 <img :src="reply.author.avatar_url" alt />
               </router-link>
-              <span class="count">{{replys(reply.id)}}/{{visits(reply.id)}}</span>
+              <span
+                class="count"
+              >{{replies.find(item=>item.id===reply.id).reply_count}}/{{replies.find(item=>item.id===reply.id).visit_count}}</span>
               <router-link :to="`/topic/${reply.id}`" class="title2">{{reply.title}}</router-link>
               <span>{{moment(reply.last_reply_at)}}</span>
             </li>
@@ -70,37 +75,75 @@ export default {
   data() {
     return {
       user: {},
-      visit_count: 0,
-      reply_count: 0
+      replies: [],
+      topics: []
     };
   },
+  watch: {
+    "$route.fullPath": {
+      immediate: true,
+      handler() {
+        this.user = [];
+        this.replies = [];
+        this.topics = [];
+        axios
+          .get(
+            `https://www.vue-js.com/api/v1/user/${this.$route.params.loginname}`
+          )
+          .then(res => {
+            this.user = res.data.data;
+            // console.log(res.data.data);
+            const arr = this.user.recent_replies.map(item =>
+              axios.get(`https://www.vue-js.com/api/v1/topic/${item.id}`)
+            );
+            Promise.all(arr).then(res => {
+              // console.log(res);
+              this.replies = res.map(item => {
+                return {
+                  id: item.data.data.id,
+                  visit_count: item.data.data.visit_count,
+                  reply_count: item.data.data.reply_count
+                };
+              });
+            });
+
+            const arr1 = this.user.recent_topics.map(item =>
+              axios.get(`https://www.vue-js.com/api/v1/topic/${item.id}`)
+            );
+            Promise.all(arr1).then(res => {
+              this.topics = res.map(item => {
+                return {
+                  id: item.data.data.id,
+                  visit_count: item.data.data.visit_count,
+                  reply_count: item.data.data.reply_count
+                };
+              });
+            });
+          });
+      }
+    }
+  },
+
   beforeCreate() {
     moment.locale("zh-cn");
   },
-  created() {
-    axios
-      .get(`https://www.vue-js.com/api/v1/user/${this.$route.params.loginname}`)
-      .then(res => {
-        this.user = res.data.data;
-        console.log(res.data.data);
-      });
-  },
+
   methods: {
     moment(time) {
       return moment(time).fromNow();
-    },
-    replys(id) {
-      axios.get(`https://www.vue-js.com/api/v1/topic/${id}`).then(res => {
-        this.reply_count = res.data.data.reply_count;
-      });
-      return this.reply_count;
-    },
-    visits(id) {
-      axios.get(`https://www.vue-js.com/api/v1/topic/${id}`).then(res => {
-        this.visit_count = res.data.data.visit_count;
-      });
-      return this.visit_count;
     }
+    // replys(id) {
+    //   axios.get(`https://www.vue-js.com/api/v1/topic/${id}`).then(res => {
+    //     this.reply_count = res.data.data.reply_count;
+    //   });
+    //   return this.reply_count;
+    // },
+    // visits(id) {
+    //   axios.get(`https://www.vue-js.com/api/v1/topic/${id}`).then(res => {
+    //     this.visit_count = res.data.data.visit_count;
+    //   });
+    //   return this.visit_count;
+    // }
   }
 };
 </script>

@@ -20,12 +20,22 @@
                 v-for="hasnot_read_message in message.hasnot_read_messages"
                 :key="hasnot_read_message.id"
               >
-                <router-link
-                  :to="`/user/${hasnot_read_message.author.loginname}`"
-                >{{hasnot_read_message.author.loginname}}</router-link>回复了你的话题
-                <router-link
-                  :to="`/topic/${hasnot_read_message.topic.id}`"
-                >{{hasnot_read_message.topic.title}}</router-link>
+                <span v-if="hasnot_read_message.type!='at'" style="display:flex;">
+                  <router-link
+                    :to="`/user/${hasnot_read_message.author.loginname}`"
+                  >{{hasnot_read_message.author.loginname}}</router-link>回复了你的话题
+                  <router-link
+                    :to="`/topic/${hasnot_read_message.topic.id}`"
+                  >{{hasnot_read_message.topic.title}}</router-link>
+                </span>
+                <span v-else style="display:flex;">
+                  <router-link
+                    :to="`/user/${hasnot_read_message.author.loginname}`"
+                  >{{hasnot_read_message.author.loginname}}</router-link>在话题
+                  <router-link
+                    :to="`/topic/${hasnot_read_message.topic.id}`"
+                  >{{hasnot_read_message.topic.title}}</router-link>中@了你
+                </span>
               </li>
             </ul>
             <ul v-else>
@@ -38,12 +48,23 @@
           <div class="content">
             <ul class="list" v-if="message.has_read_messages.length">
               <li v-for="has_read_message in message.has_read_messages" :key="has_read_message.id">
-                <router-link
-                  :to="`/user/${has_read_message.author.loginname}`"
-                >{{has_read_message.author.loginname}}</router-link>回复了你的话题
-                <router-link
-                  :to="`/topic/${has_read_message.topic.id}`"
-                >{{has_read_message.topic.title}}</router-link>
+                <span v-if="has_read_message.type!='at'" style="display:flex;">
+                  <router-link
+                    :to="`/user/${has_read_message.author.loginname}`"
+                  >{{has_read_message.author.loginname}}</router-link>回复了你的话题
+                  <router-link
+                    :to="`/topic/${has_read_message.topic.id}`"
+                  >{{has_read_message.topic.title}}</router-link>
+                </span>
+                <span v-else style="display:flex;">
+                  <router-link
+                    :to="`/user/${has_read_message.author.loginname}`"
+                  >{{has_read_message.author.loginname}}</router-link>在话题
+                  <router-link
+                    :to="`/topic/${has_read_message.topic.id}`"
+                  >{{has_read_message.topic.title}}</router-link>中@了你
+                </span>
+
                 <!-- <span>
                   <i class="fa check-square-o" @click="mark"></i>
                 </span>-->
@@ -130,14 +151,11 @@ export default {
   li {
     font-size: 13px;
     a {
-        font-size: 10px !important;
-        color: #0096da;
-        &:hover {
-          text-decoration: underline;
-        }
+      font-size: 10px !important;
+      color: #0096da;
+      &:hover {
+        text-decoration: underline;
       }
-    .content {
-      
     }
   }
 }
