@@ -1,7 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
-import "./assets/glocal.css";
+import "./assets/global.css";
 import { PUBLICURL } from "../constants";
 import "./assets/element-variables.scss";
 import { Pagination } from "element-ui";

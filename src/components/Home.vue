@@ -6,47 +6,42 @@
           <li>
             <router-link
               :to="$publicUrl+'/?tab=all'"
-              :class="$route.fullPath===`${$publicUrl}/`||$route.fullPath===`${$publicUrl}/?tab=all`?'active':''"
+              :class="$route.fullPath===`${$publicUrl}/`||$route.fullPath.indexOf('all')!=-1?'active':''"
               @click.native="total=858"
             >全部</router-link>
           </li>
           <li>
             <router-link
               :to="$publicUrl+'/?tab=good'"
-              active-class="active"
-              :exact="true"
+              :class="$route.fullPath.indexOf('good')!=-1?'active':''"
               @click.native="total=15"
             >精华</router-link>
           </li>
           <li>
             <router-link
               :to="$publicUrl+'/?tab=weex'"
-              active-class="active"
               @click.native="total=3"
-              :exact="true"
+              :class="$route.fullPath.indexOf('weex')!=-1?'active':''"
             >weex</router-link>
           </li>
           <li>
             <router-link
               :to="$publicUrl+'/?tab=share'"
-              active-class="active"
-              :exact="true"
+              :class="$route.fullPath.indexOf('share')!=-1?'active':''"
               @click.native="total=247"
             >分享</router-link>
           </li>
           <li>
             <router-link
               :to="$publicUrl+'/?tab=ask'"
-              active-class="active"
-              :exact="true"
+              :class="$route.fullPath.indexOf('ask')!=-1?'active':''"
               @click.native="total=577"
             >问答</router-link>
           </li>
           <li>
             <router-link
               :to="$publicUrl+'/?tab=job'"
-              active-class="active"
-              :exact="true"
+              :class="$route.fullPath.indexOf('job')!=-1?'active':''"
               @click.native="total=30"
             >招聘</router-link>
           </li>
@@ -65,7 +60,7 @@
                 </router-link>
                 <span class="count">{{`${topic.reply_count}/${topic.visit_count}`}}</span>
                 <span
-                  v-if="$route.fullPath==='/'||$route.fullPath==='/?tab=all'||topic.top||topic.good"
+                  v-if="$route.fullPath===`${$publicUrl}/`||$route.fullPath===`${$publicUrl}/?tab=all`||topic.top||topic.good"
                   :class="{tab:true,active:topic.top||topic.good}"
                 >{{topic.top?'置顶':topic.good?'精华':topic.tab==='job'?'招聘':topic.tab==='ask'?'问答':topic.tab==='share'?'分享':'weex'}}</span>
                 <h4>
