@@ -2,7 +2,7 @@
   <div class="userPage">
     <div class="left">
       <div class="zhuye">
-        <router-link to="/">
+        <router-link :to="$publicUrl+'/'">
           <h3>主页/</h3>
         </router-link>
         <div class="user">
@@ -19,7 +19,7 @@
         <div class="content">
           <ul>
             <li v-for="reply in user.recent_topics" :key="reply.id">
-              <router-link :to="`/user/${reply.author.loginname}`">
+              <router-link :to="`${$publicUrl}/user/${reply.author.loginname}`">
                 <img :src="reply.author.avatar_url" alt />
               </router-link>
               <span
@@ -27,7 +27,7 @@
               >{{topics.find(item=>item.id===reply.id).reply_count}}/{{topics.find(item=>item.id===reply.id).visit_count}}</span>
               <!-- <span class="count">{{replys(reply.id)}}/{{visits(reply.id)}}</span> -->
               <!-- <img :src="reply.author.avatar_url" alt /> -->
-              <router-link :to="`/topic/${reply.id}`" class="title2">{{reply.title}}</router-link>
+              <router-link :to="`${$publicUrl}/topic/${reply.id}`" class="title2">{{reply.title}}</router-link>
               <span>{{moment(reply.last_reply_at)}}</span>
             </li>
           </ul>
@@ -38,13 +38,13 @@
         <div class="content">
           <ul>
             <li v-for="reply in user.recent_replies" :key="reply.id">
-              <router-link :to="`/user/${reply.author.loginname}`">
+              <router-link :to="`${$publicUrl}/user/${reply.author.loginname}`">
                 <img :src="reply.author.avatar_url" alt />
               </router-link>
               <span
                 class="count"
               >{{replies.find(item=>item.id===reply.id).reply_count}}/{{replies.find(item=>item.id===reply.id).visit_count}}</span>
-              <router-link :to="`/topic/${reply.id}`" class="title2">{{reply.title}}</router-link>
+              <router-link :to="`${$publicUrl}/topic/${reply.id}`" class="title2">{{reply.title}}</router-link>
               <span>{{moment(reply.last_reply_at)}}</span>
             </li>
           </ul>

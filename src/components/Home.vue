@@ -6,13 +6,13 @@
           <li>
             <router-link
               to="/?tab=all"
-              :class="$route.fullPath==='/'||$route.fullPath==='/?tab=all'?'active':''"
+              :class="$route.fullPath===`${$publicUrl}/`||$route.fullPath===`${$publicUrl}/?tab=all`?'active':''"
               @click.native="total=858"
             >全部</router-link>
           </li>
           <li>
             <router-link
-              to="/?tab=good"
+              :to="$publicUrl+'/?tab=good'"
               active-class="active"
               :exact="true"
               @click.native="total=15"
@@ -20,7 +20,7 @@
           </li>
           <li>
             <router-link
-              to="/?tab=weex"
+              :to="$publicUrl+'/?tab=weex'"
               active-class="active"
               @click.native="total=3"
               :exact="true"
@@ -28,7 +28,7 @@
           </li>
           <li>
             <router-link
-              to="/?tab=share"
+              :to="$publicUrl+'/?tab=share'"
               active-class="active"
               :exact="true"
               @click.native="total=247"
@@ -36,7 +36,7 @@
           </li>
           <li>
             <router-link
-              to="/?tab=ask"
+              :to="$publicUrl+'/?tab=ask'"
               active-class="active"
               :exact="true"
               @click.native="total=577"
@@ -44,7 +44,7 @@
           </li>
           <li>
             <router-link
-              to="/?tab=job"
+              :to="$publicUrl+'/?tab=job'"
               active-class="active"
               :exact="true"
               @click.native="total=30"
@@ -60,7 +60,7 @@
           <ul class="list" v-else>
             <li v-for="topic in topics" :key="topic.id">
               <div class="box">
-                <router-link :to="`/user/${topic.author.loginname}`">
+                <router-link :to="`${$publicUrl}/user/${topic.author.loginname}`">
                   <img :src="topic.author.avatar_url" alt />
                 </router-link>
                 <span class="count">{{`${topic.reply_count}/${topic.visit_count}`}}</span>
@@ -69,7 +69,7 @@
                   :class="{tab:true,active:topic.top||topic.good}"
                 >{{topic.top?'置顶':topic.good?'精华':topic.tab==='job'?'招聘':topic.tab==='ask'?'问答':topic.tab==='share'?'分享':'weex'}}</span>
                 <h4>
-                  <router-link :to="`/topic/${topic.id}`">{{topic.title}}</router-link>
+                  <router-link :to="`${$publicUrl}/topic/${topic.id}`">{{topic.title}}</router-link>
                 </h4>
                 <span class="time">{{moment(topic.last_reply_at)}}</span>
               </div>
@@ -91,7 +91,7 @@
         <h3>个人信息</h3>
         <div class="user">
           <div class="top">
-            <router-link :to="`/user/${user_loginname}`">
+            <router-link :to="`${$publicUrl}/user/${user_loginname}`">
               <img :src="user_url" alt />
             </router-link>
             <span class="loginname">{{user_loginname}}</span>
@@ -127,8 +127,8 @@ export default {
           .get(`https://www.vue-js.com/api/v1/topics?tab=${tab}&page=${page}`)
           .then(res => {
             this.topics = res.data.data;
-            console.log();
-            
+            console.log(this.$publicUrl);
+
             // console.log(this.$route.fullPath);
           });
       }
@@ -151,7 +151,7 @@ export default {
     },
     changePage(page) {
       const tab = this.$route.query.tab || "all";
-      this.$router.push(`/?tab=${tab}&page=${page}`);
+      this.$router.push(`${this.$publicUrl}/?tab=${tab}&page=${page}`);
     }
   }
 };

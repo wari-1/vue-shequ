@@ -23,7 +23,7 @@
                   <span>
                     •作者
                     <router-link
-                      :to="`/user/${topic.author.loginname}`"
+                      :to="`${$publicUrl}/user/${topic.author.loginname}`"
                       tag="span"
                     >{{topic.author.loginname}}</router-link>
                   </span>
@@ -61,7 +61,7 @@
               <li v-for="comment in topic.replies" :key="comment.id">
                 <div class="comment-content">
                   <div class="top">
-                    <router-link :to="`/user/${comment.author.loginname}`">
+                    <router-link :to="`${$publicUrl}/user/${comment.author.loginname}`">
                       <img :src="comment.author.avatar_url" alt />
                     </router-link>
                     <div class="user_info">
@@ -101,7 +101,7 @@
           <h3>作者/</h3>
           <div class="user">
             <div class="top">
-              <router-link :to="`/user/${user.loginname}`">
+              <router-link :to="`${$publicUrl}/user/${user.loginname}`">
                 <img :src="topic.author.avatar_url" alt />
               </router-link>
               <span class="loginname">{{user.loginname}}</span>

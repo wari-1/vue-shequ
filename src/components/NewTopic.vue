@@ -3,7 +3,7 @@
     <div class="left">
       <div class="fabu">
         <div class="title1">
-          <router-link to="/">
+          <router-link :to="$publicUrl+'/'">
             <h3>主页/</h3>
           </router-link>
           <span>发布话题</span>
@@ -75,7 +75,7 @@ export default {
           this.topic_title = "";
           this.selectedTab = "";
           this.topic_content = "";
-          this.$router.push(`/topic/${res.data.topic_id}`);
+          this.$router.push(`${this.$publicUrl}/topic/${res.data.topic_id}`);
         });
     },
     onEditorBlur(quill) {

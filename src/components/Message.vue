@@ -9,7 +9,7 @@
       <div class="left">
         <div class="latest2">
           <div class="title1">
-            <router-link to="/">
+            <router-link :to="$publicUrl+'/'">
               <h3>主页/</h3>
             </router-link>
             <span>新消息</span>
@@ -22,18 +22,18 @@
               >
                 <span v-if="hasnot_read_message.type!='at'" style="display:flex;">
                   <router-link
-                    :to="`/user/${hasnot_read_message.author.loginname}`"
+                    :to="`${$publicUrl}/user/${hasnot_read_message.author.loginname}`"
                   >{{hasnot_read_message.author.loginname}}</router-link>回复了你的话题
                   <router-link
-                    :to="`/topic/${hasnot_read_message.topic.id}`"
+                    :to="`${$publicUrl}/topic/${hasnot_read_message.topic.id}`"
                   >{{hasnot_read_message.topic.title}}</router-link>
                 </span>
                 <span v-else style="display:flex;">
                   <router-link
-                    :to="`/user/${hasnot_read_message.author.loginname}`"
+                    :to="`${$publicUrl}/user/${hasnot_read_message.author.loginname}`"
                   >{{hasnot_read_message.author.loginname}}</router-link>在话题
                   <router-link
-                    :to="`/topic/${hasnot_read_message.topic.id}`"
+                    :to="`${$publicUrl}/topic/${hasnot_read_message.topic.id}`"
                   >{{hasnot_read_message.topic.title}}</router-link>中@了你
                 </span>
               </li>
@@ -50,18 +50,18 @@
               <li v-for="has_read_message in message.has_read_messages" :key="has_read_message.id">
                 <span v-if="has_read_message.type!='at'" style="display:flex;">
                   <router-link
-                    :to="`/user/${has_read_message.author.loginname}`"
+                    :to="`${$publicUrl}/user/${has_read_message.author.loginname}`"
                   >{{has_read_message.author.loginname}}</router-link>回复了你的话题
                   <router-link
-                    :to="`/topic/${has_read_message.topic.id}`"
+                    :to="`${$publicUrl}/topic/${has_read_message.topic.id}`"
                   >{{has_read_message.topic.title}}</router-link>
                 </span>
                 <span v-else style="display:flex;">
                   <router-link
-                    :to="`/user/${has_read_message.author.loginname}`"
+                    :to="`${$publicUrl}/user/${has_read_message.author.loginname}`"
                   >{{has_read_message.author.loginname}}</router-link>在话题
                   <router-link
-                    :to="`/topic/${has_read_message.topic.id}`"
+                    :to="`${$publicUrl}/topic/${has_read_message.topic.id}`"
                   >{{has_read_message.topic.title}}</router-link>中@了你
                 </span>
 
@@ -82,7 +82,7 @@
 
           <div class="user">
             <div class="top">
-              <router-link :to="`/user/${user_loginname}`">
+              <router-link :to="`${$publicUrl}/user/${user_loginname}`">
                 <img :src="user_url" alt />
               </router-link>
               <span class="loginname">{{user_loginname}}</span>

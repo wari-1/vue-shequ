@@ -5,29 +5,29 @@ import Topic from "./components/Topic.vue";
 import User from "./components/User.vue";
 import NewTopic from "./components/NewTopic.vue";
 import Message from "./components/Message.vue";
-
+import { PUBLICURL } from "../constants";
 Vue.use(VueRouter);
 
 const routes = [
   {
     component: Home,
-    path: "/"
+    path: PUBLICURL + "/"
   },
   {
     component: NewTopic,
-    path: "/topic/create"
+    path: PUBLICURL + "/topic/create"
   },
   {
     component: Topic,
-    path: "/topic/:id"
+    path: PUBLICURL + "/topic/:id"
   },
   {
     component: User,
-    path: "/user/:loginname"
+    path: PUBLICURL + "/user/:loginname"
   },
   {
     component: Message,
-    path: "/my/messages"
+    path: PUBLICURL + "/my/messages"
   }
 ];
 

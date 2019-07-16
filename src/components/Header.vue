@@ -1,18 +1,18 @@
 <template>
   <div class="header">
-    <router-link class="logo" to="/">
+    <router-link class="logo" :to="$publicUrl+'/'">
       <img src="./../assets/logo.png" alt />
       <h1>Vue.js</h1>
     </router-link>
     <div v-if="isLogin&&$route.fullPath.indexOf('create')===-1">
-      <router-link to="/topic/create">
+      <router-link :to="$publicUrl+'/topic/create'">
         <button>发布话题</button>
       </router-link>
     </div>
     <div class="message">
       <span :class="count>0?'':'none'">{{count>0?count:''}}</span>
       <!-- <span>{{count}}</span> -->
-      <router-link to="/my/messages">
+      <router-link :to="$publicUrl+'/my/messages'">
         <button>未读消息</button>
       </router-link>
     </div>
@@ -79,14 +79,14 @@ export default {
           sessionStorage.setItem("user_url", res.data.avatar_url);
           sessionStorage.setItem("user_loginname", res.data.loginname);
           this.isLogin = true;
-          this.$router.push("/");
+          this.$router.push(`${this.$publicUrl}/`);
         });
     },
     logout() {
       this.userInfo = null;
       this.isLogin = false;
       sessionStorage.clear();
-      this.$router.push("/");
+      this.$router.push(`${this.$publicUrl}/`);
     },
     getMessage() {}
   }
