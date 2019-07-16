@@ -60,7 +60,7 @@
                 </router-link>
                 <span class="count">{{`${topic.reply_count}/${topic.visit_count}`}}</span>
                 <span
-                  v-if="$route.fullPath===`${$publicUrl}/`||$route.fullPath===`${$publicUrl}/?tab=all`||topic.top||topic.good"
+                  v-if="$route.fullPath===`${$publicUrl}/`||$route.fullPath.indexOf('all')!=-1||topic.top||topic.good"
                   :class="{tab:true,active:topic.top||topic.good}"
                 >{{topic.top?'置顶':topic.good?'精华':topic.tab==='job'?'招聘':topic.tab==='ask'?'问答':topic.tab==='share'?'分享':'weex'}}</span>
                 <h4>
